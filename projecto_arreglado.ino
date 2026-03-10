@@ -223,11 +223,13 @@ void validarContrasena() {
    
     if (sistemaActivo) {
       bloquearPuerta();
+      procesarLog("sistemaOn");
       Serial.println("==============================");
       Serial.println("SISTEMA ACTIVADO");
       Serial.println("==============================");
     } else {
       desbloquearPuerta();
+      procesarLog("sistemaOff");
       Serial.println("==============================");
       Serial.println("SISTEMA DESACTIVADO");
       Serial.println("SE APAGÓ");
@@ -285,6 +287,8 @@ void procesarLog(String tipo) {
     addLog("Sistema activado #" + String(++sistemaOnCount));
   } else if (tipo == "sistemaOff") {
     addLog("Sistema desactivado #" + String(++sistemaOffCount));
+  } else {
+    continue;
   }
   pressCount++;
 }
