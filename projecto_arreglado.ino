@@ -94,8 +94,7 @@ void setup() {
       "<h1>ESP32 Button Logger</h1>"
       "<div class='green'>IP: " + ipAddress + "</div>"
       "<div class='blue'>Hora: <strong>" + getTime() + "</strong></div>"
-      "<h2 class='count'>Pulsaciones: " + String(pressCount) + "</h2>"
-      "<p style='text-align:center'>Boton en <strong>GPIO " + String(BUTTON_PIN) + "</strong></p>"
+      "<h2 class='count'>Registros: " + String(pressCount) + "</h2>"
       "<p style='text-align:center'><a href='/'>Actualizar</a> | <a href='/clear'>Borrar Logs</a></p>"
       "<div class='box'><h3>Historial:</h3>";
 
@@ -126,6 +125,9 @@ void setup() {
  
   // Configurar pin del PIR como entrada
   pinMode(pirPin, INPUT);
+
+  //Inicializar servo
+  miServo.attach(pinServo);
  
   // CONFIGURACIÓN MANUAL DE PINES PARA EVITAR ERRORES
   // Configurar pines de FILAS como SALIDA
@@ -274,9 +276,15 @@ void addLog(String msg) {
 
 void procesarLog(String tipo) {
   static int sensorCount = 0;
-  static int otroCount = 0;
-  
+  static int sistemaOnCount = 0;
+  static int sistemaOffCount = 0;
+
   if (tipo == "sensor") {
     addLog("Movimiento detectado #" + String(++sensorCount));
+  } else if (tipo == "sistemaOn") {
+    addLog("Sistema activado #" + String(++sistemaOnCount));
+  } else if (tipo == "sistemaOff") {
+    addLog("Sistema desactivado #" + String(++sistemaOffCount));
   }
+  pressCount++;
 }
