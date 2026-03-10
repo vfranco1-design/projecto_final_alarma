@@ -287,8 +287,6 @@ void procesarLog(String tipo) {
     addLog("Sistema activado #" + String(++sistemaOnCount));
   } else if (tipo == "sistemaOff") {
     addLog("Sistema desactivado #" + String(++sistemaOffCount));
-  } else {
-    continue;
   }
   pressCount++;
 }
