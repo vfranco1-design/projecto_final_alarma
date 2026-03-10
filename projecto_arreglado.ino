@@ -1,5 +1,10 @@
 #include <Keypad.h>
+#include <ESP32Servo.h>
 
+Servo miServo;
+
+// CONFIGURACIÓN DE PINES
+const int pinServo = 13;   // Pin del servo
 const int pirPin = 25;  // Pin G25 conectado al SIGNAL del PIR
 
 // ===== CONFIGURACIÓN KEYPAD =====
@@ -123,10 +128,12 @@ void validarContrasena() {
     sistemaActivo = !sistemaActivo;
    
     if (sistemaActivo) {
+      bloquearPuerta();
       Serial.println("==============================");
       Serial.println("SISTEMA ACTIVADO");
       Serial.println("==============================");
     } else {
+      desbloquearPuerta();
       Serial.println("==============================");
       Serial.println("SISTEMA DESACTIVADO");
       Serial.println("SE APAGÓ");
@@ -141,4 +148,14 @@ void validarContrasena() {
   // Limpiar la contraseña ingresada
   inputPassword = "";
   Serial.println("Listo para nueva entrada...");
+}
+
+void bloquearPuerta() {
+  Serial.println("BLOQUEANDO...");
+  miServo.write(150);
+}
+
+void desbloquearPuerta() {
+  Serial.println("DESBLOQUEANDO...");
+  miServo.write(55);
 }
